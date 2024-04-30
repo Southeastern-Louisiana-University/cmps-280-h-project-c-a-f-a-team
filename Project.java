@@ -1,82 +1,110 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Project{
     public static void main(String[] args){
 
         System.out.println("LETTER ARRANGEMENT GAME!");
 
-        int level;
+        int level = 0;          //initialise because of try-catch block
         Scanner input = new Scanner(System.in);
 
-        while(true) {
+        /*while(true) {
             System.out.print("Pick a level: Easy(1) / Medium(2) / Hard(3): ");
             level = input.nextInt();
             if(level == 1 || level == 2 || level == 3){
                 break;
             }
             System.out.println("You have entered an invalid level.");
+        }*/
+        while(true){
+            try {
+                System.out.print("Pick a level: Easy(1) / Medium(2) / Hard(3): ");
+                level = input.nextInt();
+                if(level == 1 || level == 2 || level == 3)
+                    break;
+                else
+                    throw new invalidLevelException("Invalid level exception");
+            }catch(InputMismatchException e){
+                System.out.println("Input mismatch, enter a number between 1 and 3.");
+                input.next();
+            }catch(invalidLevelException e){
+                System.out.println("You have entered an invalid level."); //Infinite loop issue.
+
+            }
         }
+
 
         String[] easyLevel = {"r-o-w-g", "i-r-b-d", "A-r-k-d"};  //AT LEAST 2 ANAGRAMS!
         String[] mediumLevel = {"l-e-t-l", "m-e-p-t","a-r-e-d"}; //AT LEAST 3 ANAGRAMS!
         String[] hardLevel = {"i-t-m-e","i-t-l-e","i-r-c-a-h"}; //AT LEAST 4 ANAGRAMS!
 
-        if( level == 1 ){
-            int proceed;
-            int n = 1;
-            do{
-                int index = (int)(Math.random()*3);
+        if(level == 1){
+            int index = 0;       //determines what prompt is displayed from each array.
+            int n = 1;           //Tracks the number of prompts and controls the loop.
+            while(n<=3) {
                 String anagram1;
                 String anagram2;
-                System.out.println("Task " + n + ": " + displayAnagram(easyLevel,index) + " (At least 2 anagrams are required)");
-                System.out.print("Anagram 1(Enter your Answer): " );
+                System.out.println("Task " + n + ": " + displayAnagram(easyLevel, index) + " (At least 2 anagrams are required)");
+                System.out.print("Anagram 1(Enter your Answer): ");
                 anagram1 = input.next();
-                checkEasyAnagram(anagram1,index);
-                System.out.print("Anagram 2(Enter your Answer): " );
+                checkEasyAnagram(anagram1, index);
+                System.out.print("Anagram 2(Enter your Answer): ");
                 anagram2 = input.next();
-                checkEasyAnagram(anagram2,index);
-
-                System.out.print("Do you want to continue? Yes(1) / No(0): ");
-                proceed = input.nextInt();
+                checkEasyAnagram(anagram2, index);
+                index++;
                 n++;
-            } while(proceed!=0);
+            }
+            System.out.println("Good job!");
         }
 
         if(level == 2){
-            int index = (int)(Math.random()*3);
-            String anagram1;
-            String anagram2;
-            String anagram3;
-            System.out.println("Task 1: " + displayAnagram(mediumLevel,index) + " (At least 3 anagrams are required)");
-            System.out.print("Anagram 1(Enter your Answer): " );
-            anagram1 = input.next();
-            checkMediumAnagram(anagram1, index);
-            System.out.print("Anagram 2(Enter your Answer): " );
-            anagram2 = input.next();
-            checkMediumAnagram(anagram2, index);
-            System.out.print("Anagram 3(Enter your Answer): " );
-            anagram3 = input.next();
-            checkMediumAnagram(anagram3, index);
+            int index = 0;
+            int n = 1;
+            while(n<=3){
+                String anagram1;
+                String anagram2;
+                String anagram3;
+                System.out.println("Task " + n + ": " + displayAnagram(mediumLevel,index) + " (At least 3 anagrams are required)");
+                System.out.print("Anagram 1(Enter your Answer): " );
+                anagram1 = input.next();
+                checkMediumAnagram(anagram1, index);
+                System.out.print("Anagram 2(Enter your Answer): " );
+                anagram2 = input.next();
+                checkMediumAnagram(anagram2, index);
+                System.out.print("Anagram 3(Enter your Answer): " );
+                anagram3 = input.next();
+                checkMediumAnagram(anagram3, index);
+                index++;
+                n++;
+            }
+            System.out.println("Good job!");
         }
 
         if(level == 3){
-            int index = (int)(Math.random()*3);
-            String anagram1;
-            String anagram2;
-            String anagram3;
-            String anagram4;
-            System.out.println("Task 1: " + displayAnagram(hardLevel,index) + " (At least 4 anagrams are required)");
-            System.out.print("Anagram 1(Enter your Answer): " );
-            anagram1 = input.next();
-            checkHardAnagram(anagram1, index);
-            System.out.print("Anagram 2(Enter your Answer): " );
-            anagram2 = input.next();
-            checkHardAnagram(anagram2, index);
-            System.out.print("Anagram 3(Enter your Answer): " );
-            anagram3 = input.next();
-            checkHardAnagram(anagram3, index);
-            System.out.print("Anagram 4(Enter your Answer): " );
-            anagram4 = input.next();
-            checkHardAnagram(anagram4, index);
+            int index = 0;
+            int n = 1;
+            while(n<=3){
+                String anagram1;
+                String anagram2;
+                String anagram3;
+                String anagram4;
+                System.out.println("Task " + n + ": " + displayAnagram(hardLevel,index) + " (At least 4 anagrams are required)");
+                System.out.print("Anagram 1(Enter your Answer): " );
+                anagram1 = input.next();
+                checkHardAnagram(anagram1, index);
+                System.out.print("Anagram 2(Enter your Answer): " );
+                anagram2 = input.next();
+                checkHardAnagram(anagram2, index);
+                System.out.print("Anagram 3(Enter your Answer): " );
+                anagram3 = input.next();
+                checkHardAnagram(anagram3, index);
+                System.out.print("Anagram 4(Enter your Answer): " );
+                anagram4 = input.next();
+                checkHardAnagram(anagram4, index);
+                index++;
+                n++;
+            }
+            System.out.println("Good job!");
         }
     }
     public static String displayAnagram(String[] level, int index){
